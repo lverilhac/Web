@@ -1,6 +1,0 @@
-<h1>{{message}}</h1>
-<form action="{% url "connect" %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="S'inscrire" />
-</form>
