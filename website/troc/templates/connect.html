@@ -1,16 +1,62 @@
 <h1>Se connecter</h1>
 
-{% if error %}
-<p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
-{% endif %}
 
-{% if user.is_authenticated %}
-Vous êtes connecté, {{ user.username }} !
-<input type="button" name="deconnexion" value="Deconnexion" onclick="self.location.href='/troc/deconnexion'"> 
-{% else %}
-<form action="." method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Se connecter" />
-</form>
-{% endif %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Se Connecter</title>
+  </head>
+  <body>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/home.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand active" href="index.html">Swap</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="navbar-warpper"><a href="index.html">Déposer un Troc</a></li>
+          <li class="navbar-warpper"><a href="index.html">Troquer</a></li>
+          <li class="navbar-warpper"><a href="index.html">Mes Trocs</a></li>
+          <li class="navbar-warpper"><a href="index.html">Mon Compte</a></li>
+          <li class="navbar-warpper"><a href="/troc/register">Se Connecter</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+     <a href='http://www.freepik.com/free-vector/mother-earth-day-banners-with-beautiful-landscapes_1081849.htm'></a>
+    </nav>
+    <div class="hero">
+      <h3> Veuillez vous connecter</h3>
+      {% if error %}
+      <p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
+      {% endif %}
+
+      {% if user.is_authenticated %}
+      Vous êtes connecté, {{ user.username }} !
+      <input type="button" name="deconnexion" value="Deconnexion" onclick="self.location.href='/troc/deconnexion'">
+      {% else %}
+      <form action="." method="post">
+          {% csrf_token %}
+          <h3>{{ form.as_p }}</h3>
+          <input type="submit" class="btn btn-hero btn-lg active" value="Se connecter" />
+      </form>
+      <input type="submit" class="btn btn-hero btn-lg active" value="S'inscrire" onclick="self.location.href='/troc/register'">
+
+      {% endif %}
+      </div>
+  </body>
+</html>

@@ -1,5 +1,47 @@
-<form action="{% url "register" %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="S'inscrire" />
-</form>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Se Connecter</title>
+  </head>
+  <body>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/home.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand active" href="index.html">Swap</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="navbar-warpper"><a href="index.html">Déposer un Troc</a></li>
+          <li class="navbar-warpper"><a href="index.html">Troquer</a></li>
+          <li class="navbar-warpper"><a href="index.html">Mes Trocs</a></li>
+          <li class="navbar-warpper"><a href="index.html">Mon Compte</a></li>
+          <li class="navbar-warpper"><a href="/troc/register">Se Connecter</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+    </nav>
+    <div class="hero">
+      <h3> Veuillez vous inscrire</h3>
+      <form action="{% url "register" %}" method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input type="submit" class ="btn btn-hero btn-lg active" value="S'inscrire" />
+        </form>
+      </div>
+  </body>
+</html>
