@@ -1,8 +1,9 @@
 from django.http import HttpResponse,Http404
-from django.shortcuts import render
-from .forms import RegisterForm
-from .models import Client
-
+from django.shortcuts import render,redirect
+from .forms import RegisterForm,ConnexionForm
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate,login,logout
+from django.core.urlresolvers import reverse
 
 def index(request):
     """Page d'accueil du site"""
@@ -29,27 +30,33 @@ def register(request):
     form = RegisterForm(request.POST or None)
     
     if form.is_valid():
-        new_login = form.cleaned_data['login']
-        new_passwd = form.cleaned_data['passwd']
+        new_login = form.cleaned_data['username']
+        new_passwd = form.cleaned_data['password']
+        new_adr_mail= form.cleaned_data['adresse_mail']
         
-        new_client = Client(login=new_login,passwd=new_passwd)
-        new_client.save()
+        user = User.objects.create_user(new_login,new_adr_mail, new_passwd)
+        user.save()
         return render(request,"bravo.html",{'login':new_login})
     return render(request,"register.html",locals())
 
-def connect(request):
-    form = RegisterForm(request.POST or None)
+def connexion(request):
+    error = False
     
-    if form.is_valid():
-        new_login = form.cleaned_data['login']
-        new_passwd = form.cleaned_data['passwd']
-        
-        try:
-            Client.objects.get(login=new_login,passwd=new_passwd)
-            return render(request,"bravo.html",{'login':new_login})
-        except:
-            message="Login ou mot de passe incorrect, veuillez réessayer"
-            return render(request, 'connect.html', locals())
-    return render(request, 'connect.html', locals())
+    if request.method=="POST":
+        form = ConnexionForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            if user is not None and user.is_active:
+                login(request, user)
+            else:
+                error=True
+    else:
+        form = ConnexionForm()
+    return render(request,'connect.html',locals())
 
-    
+
+def deconnexion(request):
+    logout(request)
+    return redirect(reverse(connexion))  

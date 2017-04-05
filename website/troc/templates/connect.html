@@ -1,6 +1,16 @@
-<h1>{{message}}</h1>
-<form action="{% url "connect" %}" method="post">
+<h1>Se connecter</h1>
+
+{% if error %}
+<p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
+{% endif %}
+
+{% if user.is_authenticated %}
+Vous êtes connecté, {{ user.username }} !
+<input type="button" name="deconnexion" value="Deconnexion" onclick="self.location.href='/troc/deconnexion'"> 
+{% else %}
+<form action="." method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="S'inscrire" />
+    <input type="submit" value="Se connecter" />
 </form>
+{% endif %}
